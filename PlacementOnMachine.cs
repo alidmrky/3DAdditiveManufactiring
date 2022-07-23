@@ -43,6 +43,8 @@ namespace _3DAdditiveManufactiring
             var checkProduct = CheckCoordinateIsPlacement(productLength, lastLimit, machineLength);
             if (checkProduct == "IsCompleted")
                 return "parça yerleşti";
+            else if (checkProduct == "IsError_X")
+                return "X ekseninde hata";
             else if (checkProduct == "IsError_Z")
                 return "Z ekseninde hata";
             else if (checkProduct == "IsError_Y")
