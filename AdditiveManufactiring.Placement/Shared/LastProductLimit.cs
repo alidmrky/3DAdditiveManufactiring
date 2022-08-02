@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
+﻿
+using System.ComponentModel;
 
-namespace _3DAdditiveManufactiring
+namespace AdditiveManufactiring.Placement.Shared
 {
     public class LastProductLimit
     {

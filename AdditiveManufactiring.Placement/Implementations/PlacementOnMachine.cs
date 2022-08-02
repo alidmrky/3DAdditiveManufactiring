@@ -1,27 +1,23 @@
-﻿using System;
+﻿using AdditiveManufactiring.Placement.Interfaces;
+using AdditiveManufactiring.Placement.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3DAdditiveManufactiring
+namespace AdditiveManufactiring.Placement.Implementations
 {
-    public class PlacementOnMachine
+    public class PlacementOnMachine : IPlacementOnMachine
     {
-        #region Properties
+        public PlacementOnMachine()
+        {
+
+        }
         public CompletedPlacementInfoDto CompletedPlacementInfo { get; set; }
         public int PlacementCoordinate_X { get; set; }
         public int PlacementCoordinate_Y { get; set; }
         public int PlacementCoordinate_Z { get; set; }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// First method called
-        /// </summary>
-        /// <param name="productInfo">ProductInfo</param>
-        /// <param name="machineInfo">MachineInfo</param>
-        /// <returns></returns>
         public CompletedPlacementInfoDto PreparePlacementOnMachine(PreparePlacementDto preparePlacementDto)
         {
             // Check Machine Volume Validation
@@ -30,12 +26,12 @@ namespace _3DAdditiveManufactiring
                 return new CompletedPlacementInfoDto() { IsSuccess = false, Value = null };
 
             var isLengthEnough = CheckMachinePlacementLengthValidation(preparePlacementDto);
-            if(!isLengthEnough)
+            if (!isLengthEnough)
                 return new CompletedPlacementInfoDto() { IsSuccess = false, Value = null };
 
             // DoWork 
             var placementWork = DoWork(preparePlacementDto);
-            if(!placementWork.IsSuccess)
+            if (!placementWork.IsSuccess)
                 return new CompletedPlacementInfoDto() { IsSuccess = false, Value = null };
 
             return placementWork;
@@ -87,7 +83,7 @@ namespace _3DAdditiveManufactiring
                 }
                 else if (checkProduct == PlacementType.Error_Y)
                 {
-                    return new CompletedPlacementInfoDto() { IsSuccess = false};
+                    return new CompletedPlacementInfoDto() { IsSuccess = false };
                 }
             }
 
@@ -173,7 +169,7 @@ namespace _3DAdditiveManufactiring
             newProductLimit.LastCoordinate_Z = PlacementCoordinate_Z;
 
             // X eksenine yerleşim yapıldığından bu eksenin yeni limiti eski limitin üzerine eklenmesi gerekiyor
-            newProductLimit.Limit_X = PlacementCoordinate_X ;
+            newProductLimit.Limit_X = PlacementCoordinate_X;
             // Sınır çizgilerinde değişiklik varsa değiştirilecek yoksa aynı kalacak
             newProductLimit.Limit_Y = lastProductLimit.LastCoordinate_Y + productLength.Length_Y <= lastProductLimit.Limit_Y ? lastProductLimit.Limit_Y : lastProductLimit.LastCoordinate_Y + productLength.Length_Y;
             newProductLimit.Limit_Z = lastProductLimit.LastCoordinate_Z + productLength.Length_Z <= lastProductLimit.Limit_Z ? lastProductLimit.Limit_Z : lastProductLimit.LastCoordinate_Z + productLength.Length_Z;
@@ -191,7 +187,5 @@ namespace _3DAdditiveManufactiring
             };
 
         }
-        #endregion
-
     }
 }
